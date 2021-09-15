@@ -17,7 +17,7 @@ class Gameboard():
         if self.board[0][column] == 0:
             for i in range(7):
                 if self.board[i][column] == 1 or self.board[i][column] == 2:
-                    self.board[i-1][column] = 
+                    self.board[i-1][column] = 3
 '''
 Add Helper functions as needed to handle moves and update board and turns
 '''
