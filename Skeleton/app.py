@@ -22,7 +22,7 @@ Initial Webpage where gameboard is initialized
 
 @app.route('/', methods=['GET'])
 def player1_connect():
-    pass
+    return render_template("player1_connect.html", status="Pick a Color.")
 
 
 '''
@@ -49,7 +49,8 @@ Assign player1 their color
 
 @app.route('/p1Color', methods=['GET'])
 def player1_config():
-    pass
+    game.player1 = request.args.get('Color')
+    return render_template("player1_connect.html", status="Color picked.")
 
 
 '''
