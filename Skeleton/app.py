@@ -10,7 +10,7 @@ import logging
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
-game = None
+game = Gameboard()
 
 '''
 Implement '/' endpoint
@@ -49,8 +49,8 @@ Assign player1 their color
 
 @app.route('/p1Color', methods=['GET'])
 def player1_config():
-    game.player1 = request.args.get('Color')
-    return render_template("player1_connect.html", status="Color picked.")
+    game.player1 = request.args.get('color')
+    return render_template("player1_connect.html", status=game.player1)
 
 
 '''
@@ -65,9 +65,14 @@ Assign player2 their color
 
 @app.route('/p2Join', methods=['GET'])
 def p2Join():
-    pass
-
-
+    if game.player1 == "red":
+        game.player2 = "yellow"
+        return render_template("p2Join.html", status=game.player2)
+    elif game.player1 == "yellow":
+        game.player2 = "red"
+        return render_template("p2Join.html", status=game.player2)
+    else:
+        return render_template("p2Join.html", status="Error")
 '''
 Implement '/move1' endpoint
 Method Type: POST
@@ -82,8 +87,9 @@ Process Player 1's move
 
 @app.route('/move1', methods=['POST'])
 def p1_move():
-    pass
-
+    move = request.get_json(force=True)
+    Invalid = not game.validateP1Move(move)
+    return jsonify(move=game.board, invalid=Invalid, winner=game.game_result)
 '''
 Same as '/move1' but instead proccess Player 2
 '''
@@ -91,7 +97,9 @@ Same as '/move1' but instead proccess Player 2
 
 @app.route('/move2', methods=['POST'])
 def p2_move():
-    pass
+    move = request.get_json(force=True)
+    Invalid = not game.validateP2Move(move)
+    return jsonify(move=game.board, invalid=Invalid, winner=game.game_result)
 
 
 

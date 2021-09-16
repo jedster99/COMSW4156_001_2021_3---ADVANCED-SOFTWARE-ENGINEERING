@@ -1,5 +1,5 @@
 import db
-
+import sys
 class Gameboard():
     def __init__(self):
         self.player1 = ""
@@ -18,30 +18,42 @@ class Gameboard():
         if self.current_turn != 'p2':
             return False
         return self.checkBoard(move)
-    def checkWin(self, row, column):
 
+    def checkWin(self, row, column):
+            win = False
+            win = self.checkHorizontal(row, column)
+            win = self.checkVertical(row, column)
+            win = self.checkDiagonal(row, column)
+    def checkHorizontal(self, row, col):
+        left = max(col - 3, 0)
+        right = min(col + 3, len(self.board))
+    def checkVertical(row, col):
+        pass
+    def checkDiagonal(row, col):
+        pass
     def checkBoard(self, move):
-        column = int(move.column[len(move.column)-1]) -1
+        column = int(move['column'][len(move['column'])-1]) -1
         if self.board[0][column] == 0:
-            for i in range(7):
-                if self.board[i][column] == 1 or self.board[i][column] == 2:
+            for i in range(6):
+                if self.board[i][column] != 0:
                     if self.current_turn == 'p1':
-                        self.board[i-1][column] = self.colorToNum(self.player1)
+                        self.board[i-1][column] = self.player1
+                        self.current_turn = "p2"
                     else:
-                        self.board[i-1][column] = self.colorToNum(self.player2)
+                        self.board[i-1][column] = self.player2
+                        self.current_turn = "p1"
                     return True
             if self.current_turn == 'p1':
-                self.board[len(self.board)-1][column] = self.colorToNum(self.player1)
+                self.board[len(self.board)-1][column] = self.player1
             else:
-                self.board[len(self.board)-1][column] = self.colorToNum(self.player2)
+                self.board[len(self.board)-1][column] = self.player2
+            if self.current_turn == "p1":
+                self.current_turn = "p2"
+            else:
+                self.current_turn = "p1"
+
             return True
         return False
-        
-    def colorToNum(color):
-        if color == "red":
-            return 1
-        else:
-            return 2
 '''
 Add Helper functions as needed to handle moves and update board and turns
 '''
