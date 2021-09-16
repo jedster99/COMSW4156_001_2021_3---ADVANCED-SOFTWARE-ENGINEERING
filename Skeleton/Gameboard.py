@@ -17,10 +17,8 @@ class Gameboard():
         if self.board[0][column] == 0:
             for i in range(7):
                 if self.board[i][column] == 1 or self.board[i][column] == 2:
-                    self.board[i-1][column] = 3
+                    if self.current_turn = 'p1':
+                        self.board[i-1][column] = 3
 '''
 Add Helper functions as needed to handle moves and update board and turns
 '''
-
-
-    
