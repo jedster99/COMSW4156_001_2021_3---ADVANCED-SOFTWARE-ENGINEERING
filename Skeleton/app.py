@@ -88,8 +88,11 @@ Process Player 1's move
 @app.route('/move1', methods=['POST'])
 def p1_move():
     move = request.get_json(force=True)
-    Invalid = not game.validateP1Move(move)
-    return jsonify(move=game.board, invalid=Invalid, winner=game.game_result)
+    Invalid = True
+    Reason = game.validateP1Move(move)
+    if len(Reason) < 1:
+        Invalid  = False
+    return jsonify(move=game.board, invalid=Invalid, reason = Reason, winner=game.game_result)
 '''
 Same as '/move1' but instead proccess Player 2
 '''
@@ -98,8 +101,11 @@ Same as '/move1' but instead proccess Player 2
 @app.route('/move2', methods=['POST'])
 def p2_move():
     move = request.get_json(force=True)
-    Invalid = not game.validateP2Move(move)
-    return jsonify(move=game.board, invalid=Invalid, winner=game.game_result)
+    Invalid = True
+    Reason = game.validateP2Move(move)
+    if len(Reason) < 1:
+        Invalid  = False
+    return jsonify(move=game.board, invalid=Invalid, reason = Reason, winner=game.game_result)
 
 
 
