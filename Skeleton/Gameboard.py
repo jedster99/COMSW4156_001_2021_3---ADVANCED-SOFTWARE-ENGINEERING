@@ -96,7 +96,6 @@ class Gameboard():
                 rowOffset += 1
             else:
                 break
-        print("left" + str(count), file=sys.stderr)
         if count >= 4:
             return True
         return False
@@ -123,7 +122,6 @@ class Gameboard():
                 rowOffset -= 1
             else:
                 break
-        print("right" + str(count), file=sys.stderr)
         if count >= 4:
             return True
         return False
